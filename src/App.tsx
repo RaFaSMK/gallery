@@ -11,6 +11,16 @@ import InputCheckbox from "./components/input-checkbox";
 import InputSingleFile from "./components/input-single-file";
 import { useForm } from "react-hook-form";
 import ImageFilePreview from "./components/image-file-preview";
+import {
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTrigger,
+} from "./components/dialog";
+import Text from "./components/text";
+import { DialogClose } from "@radix-ui/react-dialog";
 
 export default function App() {
   const form = useForm();
@@ -75,6 +85,35 @@ export default function App() {
           replaceBy={<ImageFilePreview src={fileSource} alt="imagem" />}
           {...form.register("file")}
         />
+      </div>
+
+      <div>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button>Abrir modal</Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>Teste dialog</DialogHeader>
+            <DialogBody>
+              <Text as="div" className="mb-4">
+                Teste conteúdo dialog
+              </Text>
+              <InputSingleFile
+                allowedExtensions={["png", "jpg", "jpeg", "webp"]}
+                maxFileSizeInMB={50}
+                form={form}
+                replaceBy={<ImageFilePreview src={fileSource} alt="imagem" />}
+                {...form.register("file")}
+              />
+            </DialogBody>
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button variant="secondary">Cancelar</Button>
+              </DialogClose>
+              <Button>Adicionar</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
