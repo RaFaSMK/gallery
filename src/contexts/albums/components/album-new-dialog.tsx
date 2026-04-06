@@ -36,8 +36,8 @@ export default function AlbumNewDialog({ trigger }: AlbumNewDialogProps) {
           <InputText placeholder="Adicione um título" />
 
           <div className="space-y-3">
-            <Text as="div" variant="label-small" className="mb-3">
-              Fotos cadastdradas
+            <Text as="div" variant="label-small">
+              Fotos cadastradas
             </Text>
 
             {!isLoadingPhotos && photos.length > 0 && (
@@ -45,7 +45,7 @@ export default function AlbumNewDialog({ trigger }: AlbumNewDialogProps) {
                 {photos.map((photo) => (
                   <PhotoImageSelectable
                     key={photo.id}
-                    src={`${import.meta.env.VITE_IMAGES_URL}/images/${photo.imageId}`}
+                    src={`${import.meta.env.VITE_IMAGES_URL}/${photo.imageId}`}
                     title={photo.title}
                     imageClassName="w-20 h-20"
                     onSelectImage={(selected) =>
