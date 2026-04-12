@@ -12,7 +12,7 @@ import type { Photo } from "../contexts/photos/models/photo";
 
 export default function PagePhotoDetails() {
   const { id } = useParams();
-  const { photo, isLoadingPhoto } = usePhoto(id);
+  const { photo, previousPhotoId, nextPhotoId, isLoadingPhoto } = usePhoto(id);
   const { albums, isLoadingAlbums } = useAlbums();
 
   if (!isLoadingPhoto && !photo) {
@@ -21,14 +21,18 @@ export default function PagePhotoDetails() {
   return (
     <Container>
       <header className="flex items-center justify-between gap-8 mb-8">
-        {isLoadingPhoto ? (
+        {!isLoadingPhoto ? (
           <Text as="h2" variant="heading-large">
             {photo?.title}
           </Text>
         ) : (
           <Skeleton className="w-48 h-8" />
         )}
-        <PhotosNavigator loading={isLoadingPhoto} />
+        <PhotosNavigator
+          previousPhotoId={previousPhotoId}
+          nextPhotoId={nextPhotoId}
+          loading={isLoadingPhoto}
+        />
       </header>
 
       <div className="grid grid-cols-[21rem_1fr] gap-24">
