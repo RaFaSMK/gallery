@@ -4,6 +4,7 @@ import type { Photo } from "../models/photo";
 import type { PhotoNewFormSchema } from "../schemas";
 import { toast } from "sonner";
 import usePhotoAlbums from "./use-photo-albums";
+import { useNavigate } from "react-router";
 
 interface PhotoDetailResponse extends Photo {
   nextPhotoId?: string;
@@ -11,13 +12,15 @@ interface PhotoDetailResponse extends Photo {
 }
 
 export default function usePhoto(id?: string) {
+  const navigate = useNavigate();
+
   const { data, isLoading } = useQuery<PhotoDetailResponse>({
     queryKey: ["photo", id],
     queryFn: () => fetcher(`/photos/${id}`),
     enabled: !!id,
   });
   const queryClient = useQueryClient();
-  const {managePhotoOnAlbum} = usePhotoAlbums()
+  const { managePhotoOnAlbum } = usePhotoAlbums();
 
   async function createPhoto(payload: PhotoNewFormSchema) {
     try {
@@ -34,11 +37,11 @@ export default function usePhoto(id?: string) {
           headers: {
             "Content-Type": "multipart/form-data",
           },
-        },
+        }
       );
 
       if (payload.albumsIds && payload.albumsIds.length > 0) {
-        await managePhotoOnAlbum(photo.id, payload.albumsIds)
+        await managePhotoOnAlbum(photo.id, payload.albumsIds);
       }
 
       queryClient.invalidateQueries({ queryKey: ["photos"] });
@@ -50,11 +53,24 @@ export default function usePhoto(id?: string) {
     }
   }
 
+  async function deletePhoto(photoId: string) {
+    try {
+      await api.delete(`/photos/${photoId}`);
+
+      toast.success("Foto excluída com sucesso");
+      navigate("/");
+    } catch (error) {
+      toast.error("Erro ao excluir foto");
+      throw error;
+    }
+  }
+
   return {
     photo: data,
     nextPhotoId: data?.nextPhotoId,
     previousPhotoId: data?.previousPhotoId,
     isLoadingPhoto: isLoading,
     createPhoto,
+    deletePhoto,
   };
 }

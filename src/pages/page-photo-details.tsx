@@ -1,3 +1,4 @@
+import React from "react";
 import Text from "../components/text";
 import Container from "../components/container";
 import Skeleton from "../components/skeleton";
@@ -12,12 +13,20 @@ import type { Photo } from "../contexts/photos/models/photo";
 
 export default function PagePhotoDetails() {
   const { id } = useParams();
-  const { photo, previousPhotoId, nextPhotoId, isLoadingPhoto } = usePhoto(id);
+  const { photo, previousPhotoId, nextPhotoId, isLoadingPhoto, deletePhoto } = usePhoto(id);
   const { albums, isLoadingAlbums } = useAlbums();
+  const [isDeletingPhoto, setIsDeletingPhoto] = React.useTransition();
+
+  function handleDeletePhoto() {
+    setIsDeletingPhoto(async () => {
+      await deletePhoto(photo!.id);
+    });
+  }
 
   if (!isLoadingPhoto && !photo) {
     return <div>Photo não encontrada</div>;
   }
+
   return (
     <Container>
       <header className="flex items-center justify-between gap-8 mb-8">
@@ -48,7 +57,9 @@ export default function PagePhotoDetails() {
           )}
 
           {!isLoadingPhoto ? (
-            <Button variant="destructive">Excluir</Button>
+            <Button variant="destructive" onClick={handleDeletePhoto} disabled={isDeletingPhoto}>
+              {isDeletingPhoto ? "Excluindo..." : "Excluir"}
+            </Button>
           ) : (
             <Skeleton className="w-20 h-10" />
           )}
@@ -59,11 +70,7 @@ export default function PagePhotoDetails() {
             Álbuns
           </Text>
 
-          <AlbumsListSelectable
-            photo={photo as Photo}
-            albums={albums}
-            loading={isLoadingAlbums}
-          />
+          <AlbumsListSelectable photo={photo as Photo} albums={albums} loading={isLoadingAlbums} />
         </div>
       </div>
     </Container>
