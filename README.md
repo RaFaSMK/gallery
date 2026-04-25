@@ -4,7 +4,7 @@ Aplicacao React para gerenciamento e visualizacao de fotos e albuns, com consumo
 
 ## Demo online
 
-- Frontend: https://gallery-nxus0dtgl-rafasmks-projects.vercel.app/
+- Frontend: https://gallery-phi-ashy.vercel.app/
 - Backend/API: https://gallery-plus-api-98fb.onrender.com/
 
 ## Tema do projeto
