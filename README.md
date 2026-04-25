@@ -4,8 +4,8 @@ Aplicacao React para gerenciamento e visualizacao de fotos e albuns, com consumo
 
 ## Demo online
 
-- Frontend: ADICIONE_AQUI_O_LINK_DA_APLICACAO
-- Backend/API: ADICIONE_AQUI_O_LINK_DA_API
+- Frontend: https://gallery-nxus0dtgl-rafasmks-projects.vercel.app/
+- Backend/API: https://gallery-plus-api-98fb.onrender.com/
 
 ## Tema do projeto
 
@@ -126,13 +126,6 @@ https://gallery-plus-api-98fb.onrender.com/
 
 https://gallery-nxus0dtgl-rafasmks-projects.vercel.app/
 
-### Atualizacao final no README
-
-Depois do deploy, substitua em "Demo online":
-
-- Frontend: URL da Vercel
-- Backend/API: URL do Render
-
 ## Rotas da aplicacao
 
 - `/` pagina inicial com lista de fotos e filtros.
@@ -140,8 +133,6 @@ Depois do deploy, substitua em "Demo online":
 - `/componentes` pagina de componentes.
 
 ## Prints da aplicacao
-
-Adicione capturas reais do seu projeto para a entrega:
 
 - Home
   - ![Home](./docs/screenshots/home.png)
