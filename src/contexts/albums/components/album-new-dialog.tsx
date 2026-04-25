@@ -18,6 +18,7 @@ import usePhotos from "../../photos/hooks/use-photos";
 import { useForm } from "react-hook-form";
 import { albumNewFormSchema, type AlbumNewFormSchema } from "../schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import useAlbum from "../hooks/use-album";
 
 interface AlbumNewDialogProps {
   trigger: React.ReactNode;
@@ -29,6 +30,8 @@ export default function AlbumNewDialog({ trigger }: AlbumNewDialogProps) {
     resolver: zodResolver(albumNewFormSchema),
   });
   const { photos, isLoadingPhotos } = usePhotos();
+  const { createAlbum } = useAlbum();
+  const [isCreatingAlbum, setIsCreatingAlbum] = React.useTransition();
 
   React.useEffect(() => {
     if (!modalOpen) {
@@ -50,7 +53,10 @@ export default function AlbumNewDialog({ trigger }: AlbumNewDialogProps) {
   }
 
   function handleSubmit(payload: AlbumNewFormSchema) {
-    console.log(payload);
+    setIsCreatingAlbum(async () => {
+      await createAlbum(payload);
+      setModalOpen(false);
+    });
   }
 
   return (
@@ -80,9 +86,7 @@ export default function AlbumNewDialog({ trigger }: AlbumNewDialogProps) {
                       src={`${import.meta.env.VITE_IMAGES_URL}/${photo.imageId}`}
                       title={photo.title}
                       imageClassName="w-20 h-20"
-                      onSelectImage={(selected) =>
-                        handleTogglePhoto(selected, photo.id)
-                      }
+                      onSelectImage={(selected) => handleTogglePhoto(selected, photo.id)}
                     />
                   ))}
                 </div>
@@ -91,10 +95,7 @@ export default function AlbumNewDialog({ trigger }: AlbumNewDialogProps) {
               {isLoadingPhotos && (
                 <div className="flex flex-wrap gap-2">
                   {Array.from({ length: 4 }).map((_, index) => (
-                    <Skeleton
-                      key={`photo-loading-${index}`}
-                      className="w-20 h-20 rounded-lg "
-                    />
+                    <Skeleton key={`photo-loading-${index}`} className="w-20 h-20 rounded-lg " />
                   ))}
                 </div>
               )}
@@ -112,10 +113,14 @@ export default function AlbumNewDialog({ trigger }: AlbumNewDialogProps) {
 
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant="secondary">Cancelar</Button>
+              <Button variant="secondary" disabled={isCreatingAlbum}>
+                Cancelar
+              </Button>
             </DialogClose>
 
-            <Button type="submit">Criar</Button>
+            <Button type="submit" disabled={isCreatingAlbum} handling={isCreatingAlbum}>
+              {isCreatingAlbum ? "Criando..." : "Criar"}
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>
