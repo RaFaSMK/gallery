@@ -120,20 +120,11 @@ pnpm build
 
 ### Backend no Render
 
-1. Suba este repositorio no GitHub.
-2. No Render, clique em New + e selecione Blueprint.
-3. Selecione este repositorio para usar o arquivo `render.yaml`.
-4. Aguarde o deploy e copie a URL publica da API (exemplo: `https://gallery-plus-api.onrender.com`).
+https://gallery-plus-api-98fb.onrender.com/
 
 ### Frontend na Vercel
 
-1. Na Vercel, clique em Add New Project e importe este repositorio.
-2. Framework: Vite (detectado automaticamente).
-3. Este repositorio contem frontend e backend no mesmo projeto, mas na Vercel sera feito somente o build do frontend via `pnpm build-frontend` (ja configurado em `vercel.json`).
-4. Configure as variaveis de ambiente do frontend:
-   - `VITE_API_URL` = URL publica da API no Render
-   - `VITE_IMAGES_URL` = URL publica da API + `/images`
-5. Execute o deploy e copie a URL publica do frontend.
+https://gallery-nxus0dtgl-rafasmks-projects.vercel.app/
 
 ### Atualizacao final no README
 
@@ -161,7 +152,7 @@ Adicione capturas reais do seu projeto para a entrega:
 
 ## Link do repositorio
 
-- GitHub: ADICIONE_AQUI_O_LINK_DO_SEU_REPOSITORIO
+- GitHub: https://github.com/RaFaSMK/gallery
 
 ## Observacao sobre persistencia no plano gratuito
 
