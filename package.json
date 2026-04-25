@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "pnpm build-server && vite build",
+    "build-frontend": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "build-server": "tsc --noEmit -p tsconfig.server.json && tsup",

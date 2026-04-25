@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: gallery-plus-api
+    runtime: node
+    plan: free
+    region: oregon
+    rootDir: .
+    buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm build-server
+    startCommand: pnpm run-server
+    envVars:
+      - key: NODE_VERSION
+        value: 20
